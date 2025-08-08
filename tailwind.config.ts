@@ -6,7 +6,7 @@ export default {
 		"./pages/**/*.{ts,tsx}",
 		"./components/**/*.{ts,tsx}",
 		"./app/**/*.{ts,tsx}",
-		"./src/**/*.{ts,tsx}",
+		"./src/**/*.{ts,tsx}"
 	],
 	prefix: "",
 	theme: {
@@ -31,6 +31,14 @@ export default {
 				secondary: {
 					DEFAULT: 'hsl(var(--secondary))',
 					foreground: 'hsl(var(--secondary-foreground))'
+				},
+				// Minecraft colors
+				minecraft: {
+					green: '#4CAF50',
+					'green-light': '#8BC34A',
+					'green-dark': '#22E7D32',
+					'stone-gray': '#424242',
+					gray: '#9E9E9E'
 				},
 				destructive: {
 					DEFAULT: 'hsl(var(--destructive))',
@@ -84,11 +92,24 @@ export default {
 					to: {
 						height: '0'
 					}
+				},
+				'float': {
+					'0%, 100%': { transform: 'translateY(0px)' },
+					'50%': { transform: 'translateY(-10px)' }
+				},
+				'pixel-glitch': {
+					'0%, 100%': { transform: 'translate(0)' },
+					'10%': { transform: 'translate(-1px, -1px)' },
+					'20%': { transform: 'translate(1px, 1px)' },
+					'30%': { transform: 'translate(-1px, 1px)' },
+					'40%': { transform: 'translate(1px, -1px)' }
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
+				'accordion-up': 'accordion-up 0.2s ease-out',
+				'float': 'float 3s ease-in-out infinite',
+				'pixel-glitch': 'pixel-glitch 0.3s ease-in-out'
 			}
 		}
 	},
