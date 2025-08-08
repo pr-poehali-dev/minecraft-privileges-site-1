@@ -1,70 +1,120 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import Icon from "@/components/ui/icon";
-import { useState } from "react";
+import PrivilegeCard from '../components/PrivilegeCard';
+import SocialLinks from '../components/SocialLinks';
 
-interface Privilege {
-  id: string;
-  name: string;
-  price: number;
-  color: string;
-  features: string[];
-  commands: string[];
-  popular?: boolean;
-}
-
-const privileges: Privilege[] = [
+const privileges = [
   {
-    id: 'vip',
     name: 'VIP',
-    price: 99,
-    color: 'from-yellow-400 to-yellow-600',
-    features: ['Приватные регионы', 'Телепортация /home', 'Цветной ник', 'Kit VIP каждый день'],
-    commands: ['/home', '/sethome', '/kit vip', '/region claim', '/nick'],
+    price: '199₽',
+    color: 'border-green-500',
+    description: 'Базовая VIP привилегия',
+    features: [
+      'Цветной ник в чате',
+      'Приватный регион 50x50',
+      'Доступ к VIP командам',
+      '5 точек дома (/sethome)',
+      'Полет в лобби'
+    ],
+    commands: [
+      { name: 'fly', description: 'Включить/выключить полет в лобби' },
+      { name: 'sethome [название]', description: 'Установить точку дома' },
+      { name: 'home [название]', description: 'Телепорт к дому' },
+      { name: 'kit vip', description: 'Получить VIP набор предметов' },
+      { name: 'workbench', description: 'Открыть верстак' }
+    ],
+    icon: 'Star'
   },
   {
-    id: 'premium',
-    name: 'Premium',
-    price: 199,
-    color: 'from-purple-400 to-purple-600',
-    features: ['Полёт в лобби', 'Больше домов (5)', 'Приоритетный вход', 'Kit Premium', 'Доступ к /workbench'],
-    commands: ['/fly', '/homes', '/kit premium', '/wb', '/priority'],
-    popular: true,
+    name: 'PREMIUM',
+    price: '399₽',
+    color: 'border-blue-500',
+    description: 'Премиум привилегия для продвинутых игроков',
+    features: [
+      'Все возможности VIP',
+      'Приватный регион 100x100',
+      'Неограниченные точки дома',
+      'Доступ к Premium командам',
+      'Полет в выживании',
+      'Защита от взрывов'
+    ],
+    commands: [
+      { name: 'fly', description: 'Полет везде' },
+      { name: 'god', description: 'Режим бога (неуязвимость)' },
+      { name: 'heal', description: 'Восстановить здоровье' },
+      { name: 'feed', description: 'Утолить голод' },
+      { name: 'kit premium', description: 'Получить Premium набор' },
+      { name: 'back', description: 'Вернуться к месту смерти' },
+      { name: 'enderchest', description: 'Открыть эндер-сундук' }
+    ],
+    icon: 'Crown'
   },
   {
-    id: 'deluxe',
-    name: 'Deluxe',
-    price: 299,
-    color: 'from-red-400 to-red-600',
-    features: ['Полёт на выживании', 'Неограниченные дома', 'Креативный инвентарь', 'Kit Deluxe', 'Доступ к /god'],
-    commands: ['/fly survival', '/sethome unlimited', '/ci', '/kit deluxe', '/god'],
+    name: 'ELITE',
+    price: '699₽',
+    color: 'border-purple-500',
+    description: 'Элитная привилегия для истинных фанатов',
+    features: [
+      'Все возможности Premium',
+      'Приватный регион 200x200',
+      'Доступ к Elite командам',
+      'Телепорт к игрокам',
+      'Создание варпов',
+      'Смена погоды и времени'
+    ],
+    commands: [
+      { name: 'tp [ник]', description: 'Телепорт к игроку' },
+      { name: 'tphere [ник]', description: 'Телепорт игрока к себе' },
+      { name: 'setwarp [название]', description: 'Создать варп' },
+      { name: 'warp [название]', description: 'Телепорт к варпу' },
+      { name: 'weather [sun/rain]', description: 'Изменить погоду' },
+      { name: 'time [день/ночь]', description: 'Изменить время' },
+      { name: 'kit elite', description: 'Получить Elite набор' }
+    ],
+    icon: 'Gem'
   },
-];
-
-const socialLinks = [
-  { name: 'Discord', icon: 'MessageCircle', url: '#', color: 'from-indigo-500 to-purple-600' },
-  { name: 'VKontakte', icon: 'Users', url: '#', color: 'from-blue-500 to-blue-700' },
-  { name: 'Telegram', icon: 'Send', url: '#', color: 'from-cyan-400 to-blue-500' },
+  {
+    name: 'LEGEND',
+    price: '999₽',
+    color: 'border-yellow-500',
+    description: 'Легендарная привилегия для избранных',
+    features: [
+      'Все возможности Elite',
+      'Приватный регион 500x500',
+      'Админские команды',
+      'Креативный режим',
+      'Бессмертие',
+      'Управление сервером'
+    ],
+    commands: [
+      { name: 'gamemode [режим]', description: 'Смена игрового режима' },
+      { name: 'vanish', description: 'Режим невидимости' },
+      { name: 'noclip', description: 'Прохождение сквозь блоки' },
+      { name: 'speed [скорость]', description: 'Изменить скорость' },
+      { name: 'give [предмет] [кол-во]', description: 'Выдать предмет' },
+      { name: 'enchant [зачарование]', description: 'Зачаровать предмет' },
+      { name: 'kit legend', description: 'Получить Legend набор' }
+    ],
+    icon: 'Trophy'
+  }
 ];
 
 const Index = () => {
-  const [hoveredPrivilege, setHoveredPrivilege] = useState<string | null>(null);
-
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-green-900 to-slate-900">
+    <div className="min-h-screen bg-gradient-to-b from-gray-900 via-gray-800 to-black minecraft-background">
       {/* Header */}
-      <header className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-green-600/20 to-emerald-600/20"></div>
-        <div className="container mx-auto px-4 py-16 relative">
-          <div className="text-center">
-            <h1 className="text-6xl font-black text-white mb-4 animate-float" style={{ fontFamily: 'Orbitron' }}>
-              🎮 MINECRAFT ПРИВИЛЕГИИ
-            </h1>
-            <p className="text-xl text-green-300 mb-8 max-w-2xl mx-auto">
-              Получи доступ к уникальным командам и возможностям на нашем сервере!
-              Выбери свою привилегию и стань частью элитного сообщества игроков.
-            </p>
+      <header className="py-16 text-center border-b-4 border-yellow-500">
+        <div className="container mx-auto px-4">
+          <h1 className="text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-green-400 to-blue-400 minecraft-title mb-4">
+            🎮 MINECRAFT ПРИВИЛЕГИИ
+          </h1>
+          <p className="text-xl text-gray-300 minecraft-text">
+            Выбери свой путь в мире приключений!
+          </p>
+          <div className="mt-8">
+            <div className="minecraft-info-panel bg-black/50 border-2 border-green-500 rounded-lg p-4 max-w-md mx-auto">
+              <p className="text-green-400 font-bold minecraft-text">
+                ✨ Наведи на привилегию чтобы увидеть команды!
+              </p>
+            </div>
           </div>
         </div>
       </header>
@@ -72,131 +122,29 @@ const Index = () => {
       {/* Privileges Section */}
       <section className="py-16">
         <div className="container mx-auto px-4">
-          <h2 className="text-4xl font-bold text-white text-center mb-12" style={{ fontFamily: 'Orbitron' }}>
-            ⭐ Выбери свою привилегию
-          </h2>
-          
-          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            {privileges.map((privilege) => (
-              <Card
-                key={privilege.id}
-                className={`privilege-card cursor-pointer ${
-                  hoveredPrivilege === privilege.id ? 'ring-4 ring-green-400' : ''
-                }`}
-                onMouseEnter={() => setHoveredPrivilege(privilege.id)}
-                onMouseLeave={() => setHoveredPrivilege(null)}
-              >
-                <CardHeader className="text-center relative">
-                  {privilege.popular && (
-                    <Badge className="absolute -top-2 -right-2 bg-gradient-to-r from-orange-400 to-red-500 text-white font-bold">
-                      🔥 ПОПУЛЯРНОЕ
-                    </Badge>
-                  )}
-                  
-                  <div className={`mx-auto w-20 h-20 rounded-full bg-gradient-to-r ${privilege.color} flex items-center justify-center mb-4 animate-float`}>
-                    <Icon name="Crown" size={32} className="text-white" />
-                  </div>
-                  
-                  <CardTitle className="text-2xl font-bold text-white mb-2" style={{ fontFamily: 'Orbitron' }}>
-                    {privilege.name}
-                  </CardTitle>
-                  
-                  <div className="text-3xl font-black text-green-400 mb-4">
-                    {privilege.price} ₽
-                  </div>
-                </CardHeader>
-
-                <CardContent>
-                  <div className="space-y-4">
-                    <div>
-                      <h4 className="text-sm font-bold text-green-300 uppercase mb-3">Возможности:</h4>
-                      <ul className="space-y-2">
-                        {privilege.features.map((feature, index) => (
-                          <li key={index} className="flex items-start gap-2 text-gray-300">
-                            <Icon name="Check" size={16} className="text-green-400 mt-0.5 flex-shrink-0" />
-                            {feature}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-
-                    {hoveredPrivilege === privilege.id && (
-                      <div className="bg-slate-800/50 rounded-lg p-4 border border-green-500/30 animate-accordion-down">
-                        <h4 className="text-sm font-bold text-green-300 uppercase mb-3">Команды:</h4>
-                        <div className="grid gap-1">
-                          {privilege.commands.map((command, index) => (
-                            <code key={index} className="bg-slate-900/80 px-2 py-1 rounded text-green-400 text-xs font-mono">
-                              {command}
-                            </code>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-
-                    <Button className="w-full minecraft-button">
-                      <Icon name="ShoppingCart" size={16} className="mr-2" />
-                      Купить привилегию
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {privileges.map((privilege, index) => (
+              <PrivilegeCard
+                key={index}
+                {...privilege}
+              />
             ))}
           </div>
         </div>
       </section>
 
-      {/* Social Networks */}
-      <section className="py-16 bg-slate-800/30">
-        <div className="container mx-auto px-4">
-          <h2 className="text-4xl font-bold text-white text-center mb-12" style={{ fontFamily: 'Orbitron' }}>
-            🌐 Присоединяйся к сообществу
-          </h2>
-          
-          <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-            {socialLinks.map((social) => (
-              <Card key={social.name} className="bg-gradient-to-br from-slate-700 to-slate-900 border-slate-600 hover:scale-105 transition-all duration-300 cursor-pointer group">
-                <CardContent className="p-8 text-center">
-                  <div className={`mx-auto w-16 h-16 rounded-full bg-gradient-to-r ${social.color} flex items-center justify-center mb-4 group-hover:animate-pulse`}>
-                    <Icon name={social.icon as any} size={24} className="text-white" />
-                  </div>
-                  
-                  <h3 className="text-xl font-bold text-white mb-2" style={{ fontFamily: 'Orbitron' }}>
-                    {social.name}
-                  </h3>
-                  
-                  <p className="text-gray-400 text-sm mb-4">
-                    Общайся с игроками, получай новости и участвуй в конкурсах
-                  </p>
-                  
-                  <Button variant="outline" className="minecraft-button bg-transparent border-2">
-                    Присоединиться
-                  </Button>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* Social Links */}
+      <SocialLinks />
 
       {/* Footer */}
-      <footer className="bg-slate-900/80 py-8">
+      <footer className="bg-black border-t-4 border-yellow-500 py-8">
         <div className="container mx-auto px-4 text-center">
-          <div className="flex justify-center items-center gap-4 mb-4">
-            <Icon name="Gamepad2" size={24} className="text-green-400" />
-            <span className="text-white font-bold text-lg" style={{ fontFamily: 'Orbitron' }}>
-              MinecraftServer.ru
-            </span>
-          </div>
-          
-          <p className="text-gray-400 text-sm">
-            © 2024 Все права защищены. IP сервера: play.minecraftserver.ru
+          <p className="text-gray-400 minecraft-text">
+            © 2024 Minecraft Server. Все права защищены.
           </p>
-          
-          <div className="mt-4 flex justify-center gap-6">
-            <a href="#" className="text-gray-400 hover:text-green-400 transition-colors">Правила</a>
-            <a href="#" className="text-gray-400 hover:text-green-400 transition-colors">Поддержка</a>
-            <a href="#" className="text-gray-400 hover:text-green-400 transition-colors">Донат</a>
-          </div>
+          <p className="text-gray-500 text-sm mt-2">
+            Сайт создан с ❤️ для лучшего игрового опыта
+          </p>
         </div>
       </footer>
     </div>
