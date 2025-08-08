@@ -105,8 +105,9 @@
 
 @layer components {
   .minecraft-button {
-    @apply px-6 py-3 bg-gradient-to-b from-green-400 to-green-600 border-2 border-green-300 text-white font-bold text-shadow-sm;
+    @apply px-6 py-3 bg-gradient-to-b from-green-400 to-green-600 border-2 border-green-300 text-white font-bold;
     font-family: "Orbitron", monospace;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
     box-shadow:
       inset 0 1px 0 rgba(255, 255, 255, 0.2),
       0 2px 4px rgba(0, 0, 0, 0.3),
